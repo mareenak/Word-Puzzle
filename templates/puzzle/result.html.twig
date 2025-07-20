@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        .summary p {
+            font-size: 16px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        ul li {
+            background-color: #f2f2f2;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 6px;
+            color: #333;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        .leaderboard-link {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .leaderboard-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h2>Game Over</h2>
+
+    <div class="summary">
+        <p><strong>Your Letters:</strong> {{ puzzle.initialLetters }}</p>
+        <p><strong>Remaining Letters:</strong> {{ puzzle.remainingLetters }}</p>
+    </div>
+
+    <h3>Your Submissions</h3>
+    <ul>
+        {% for submission in puzzle.submissions %}
+            <li>{{ submission.word }} — {{ submission.score }} points</li>
+        {% else %}
+            <li class="no-data">No submissions yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Other Valid Words You Missed</h3>
+    <ul>
+        {% for word in possibleWords %}
+            <li>{{ word }}</li>
+        {% else %}
+            <li class="no-data">No other valid words found.</li>
+        {% endfor %}
+    </ul>
+
+    <a class="leaderboard-link" href="{{ path('leaderboard') }}">View Leaderboard</a>
+{% endblock %}

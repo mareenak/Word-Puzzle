@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Welcome to Word Puzzle</h2>
+    <p><strong>Your Letters:</strong> {{ puzzle.initialLetters }}</p>
+
+    {{ form_start(form, { action: path('submit_word', { id: puzzle.id }) }) }}
+        {{ form_row(form.word) }}
+        <button type="submit" class="btn btn-primary">Submit Word</button>
+    {{ form_end(form) }}
+
+    {% for label, messages in app.flashes %}
+        {% for msg in messages %}
+            <div class="{{ label == 'error' ? 'alert alert-danger' : 'alert alert-success' }}">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
