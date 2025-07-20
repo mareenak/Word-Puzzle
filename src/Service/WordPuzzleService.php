@@ -4,7 +4,6 @@
 namespace App\Service;
 
 use App\Service\DbLoggerService;
-use GuzzleHttp\Client;
 
 class WordPuzzleService
 {
@@ -42,11 +41,7 @@ class WordPuzzleService
     public function isValidWord(string $word): bool
     {
         try {
-
-            $client = new \GuzzleHttp\Client();
-            $url = 'https://api.dictionaryapi.dev/api/v2/entries/en/' . urlencode($word);
-            $response = @file_get_contents($url);
-            return $response;
+            return in_array(strtolower($word), $this->dictionary);
         } catch (\Throwable $e) {
             $this->logger->log('error', 'Validation check failed: ' . $e->getMessage());
             return false;
